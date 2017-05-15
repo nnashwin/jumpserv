@@ -5,6 +5,7 @@ const Preferences = require('preferences');
 const argv = require('minimist')(process.argv.slice(2));
 const files = require('./lib/files');
 const questions = require('./lib/questions');
+const server = require('./lib/server');
 
 const prefs = new Preferences('jumpserv');
 
@@ -21,6 +22,5 @@ const dirArg = argv['_'][0];
 
 const jumpDir = `${prefs.HackerDir}/${dirArg}`;
 
-console.log(`Current directory: ${process.cwd()}`);
 process.chdir(jumpDir);
-console.log(`Current directory: ${process.cwd()}`);
+server.startServer(8000, './public');
