@@ -2,7 +2,6 @@
 
 const fs = require('fs');
 const chalk = require('chalk');
-const inquirer = require('inquirer');
 const Preferences = require('preferences');
 const argv = require('minimist')(process.argv.slice(2));
 const files = require('./lib/files');
@@ -11,18 +10,17 @@ const server = require('./lib/server');
 
 const prefs = new Preferences('jumpserv');
 
-if (!prefs.HackerDir) {
+if (!prefs.hackerDir || !prefs.publicDir) {
 	console.log(`ahhhh, jumpserv doesn't exist!!`);
 	questions.getBasicCredentials((dirObj) => {
 		if (dirObj) {
-			prefs.HackerDir = dirObj['HackerDir'];
+			prefs.hackerDir = dirObj['hackerDir'];
+			prefs.publicDir = dirObj['publicDir'];
 		}
 	});
+} else if (prefs.hackerDir && prefs.publicDir) {
+	const dirArg = argv['_'][0];
+	const jumpDir = `${prefs.hackerDir}/${dirArg}`;
+	process.chdir(jumpDir);
+	server.startServer(8000, prefs.publicDir);
 }
-
-const dirArg = argv['_'][0];
-
-const jumpDir = `${prefs.HackerDir}/${dirArg}`;
-
-process.chdir(jumpDir);
-server.startServer(8000, './public');
