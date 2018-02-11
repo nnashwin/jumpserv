@@ -11,7 +11,6 @@ const server = require('./lib/server');
 const prefs = new Preferences('jumpserv');
 
 if (!prefs.hackerDir || !prefs.publicDir) {
-	console.log(`ahhhh, jumpserv doesn't exist!!`);
 	questions.getBasicCredentials((dirObj) => {
 		if (dirObj) {
 			prefs.hackerDir = dirObj['hackerDir'];
