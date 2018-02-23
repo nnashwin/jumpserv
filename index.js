@@ -17,8 +17,13 @@ if (!prefs.hackerDir || !prefs.publicDir) {
 			prefs.publicDir = dirObj['publicDir'];
 		}
 	});
+} else if (argv['_'][0] === undefined) {
+	console.error(`You must enter a directory to jump to.\nYour current base directory is: ${prefs.hackerDir}`);
 } else if (prefs.hackerDir && prefs.publicDir) {
 	const dirArg = argv['_'][0];
+	if (!fs.existsSync(dirArg)) {
+		return console.error(`The directory ${prefs.hackerDir}/${dirArg} can not be found.\nPlease either reset your base dir or check the path to your directory`);
+	}
 	const jumpDir = `${prefs.hackerDir}/${dirArg}`;
 	process.chdir(jumpDir);
 	server.startServer(8000, prefs.publicDir);
