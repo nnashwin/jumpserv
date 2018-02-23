@@ -4,7 +4,6 @@ const fs = require('fs');
 const chalk = require('chalk');
 const Preferences = require('preferences');
 const argv = require('minimist')(process.argv.slice(2));
-const files = require('./lib/files');
 const questions = require('./lib/questions');
 const server = require('./lib/server');
 
