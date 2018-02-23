@@ -20,10 +20,11 @@ if (!prefs.hackerDir || !prefs.publicDir) {
 	console.error(`You must enter a directory to jump to.\nYour current base directory is: ${prefs.hackerDir}`);
 } else if (prefs.hackerDir && prefs.publicDir) {
 	const dirArg = argv['_'][0];
-	if (!fs.existsSync(dirArg)) {
+	if (!fs.existsSync(`${prefs.hackerDir}/${dirArg}`)) {
 		return console.error(`The directory ${prefs.hackerDir}/${dirArg} can not be found.\nPlease either reset your base dir or check the path to your directory`);
 	}
 	const jumpDir = `${prefs.hackerDir}/${dirArg}`;
+	console.log(`Jumping to ${jumpDir}`);
 	process.chdir(jumpDir);
 	server.startServer(8000, prefs.publicDir);
 }
